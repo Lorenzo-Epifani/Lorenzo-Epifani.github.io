@@ -1,13 +1,654 @@
-<!doctype html>
-<html lang="it">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Work in Progress</title>
-  <link rel="icon" href="favicon.ico" />
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorenzo Epifani - Portfolio</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;     /* GitHub Dark Dimmed style */
+            --card-bg: #161b22;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;       /* Blue accent */
+            --accent-hover: #1f6feb;
+            --border: #30363d;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            padding-bottom: 50px;
+        }
+
+        h1, h2, h3, h4 {
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- HEADER & HERO --- */
+        header {
+            text-align: center;
+            padding: 50px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--card-bg);
+            box-shadow: 0 0 0 2px var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .profile-title {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .profile-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .summary {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* --- SECTIONS GENERAL --- */
+        section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: "#";
+            color: var(--accent);
+            margin-right: 10px;
+            font-family: var(--font-mono);
+        }
+
+        /* --- CARDS (Experience & Education) --- */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .card-role {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .card-company {
+            color: var(--accent);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .card-date {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: #21262d;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .card-desc {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        /* --- TECH STACK TAGS --- */
+        .stack-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tech-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            background-color: rgba(88, 166, 255, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            padding: 3px 8px;
+            border-radius: 20px;
+        }
+
+        /* --- SKILLS GRID --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-box {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .skill-box h3 {
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .skill-list li {
+            list-style: none;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+        .skill-list li::before {
+            content: ">";
+            color: var(--accent);
+            margin-right: 8px;
+            font-weight: bold;
+            font-family: var(--font-mono);
+        }
+
+        /* --- PUBLICATIONS --- */
+        .pub-item {
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 3px solid var(--border);
+        }
+        
+        .pub-title {
+            font-weight: bold;
+            color: var(--text-main);
+            font-size: 1.05rem;
+        }
+        
+        .pub-authors {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .pub-conf {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-top: 2px;
+        }
+
+        /* --- LANGUAGES TABLE --- */
+        .lang-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .lang-table th, .lang-table td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+        .lang-table th {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 50px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 600px) {
+            .card-header {
+                flex-direction: column;
+            }
+            .card-date {
+                margin-top: 5px;
+            }
+        }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-900 flex items-center justify-center h-screen">
-  <h1 class="text-4xl md:text-6xl font-bold text-slate-700">🚧 WORK IN PROGRESS 🚧</h1>
+<body>
+
+    <div class="container">
+        
+        <header>
+            <img src="./pic.jpeg" alt="Lorenzo Epifani" class="profile-pic">
+            
+            <h1 class="profile-title">Lorenzo Epifani</h1>
+            <div class="profile-subtitle">Machine Learning Specialist & Developer</div>
+            
+            <div class="contact-info">
+                <span>📍 Pavia, Italy</span>
+                <span>📧 <a href="mailto:lor.epi.job@gmail.com">lor.epi.job@gmail.com</a></span>
+            </div>
+
+            <p class="summary">
+                "Hi! My name is Lorenzo and I was born in Brescia in 1994. Computers have been part of my life since I have memories, feeding my desire to learn, work and collaborate with other people. The command line is my comfort zone."
+            </p>
+        </header>
+
+        <section>
+            <h2 class="section-title">Work Experience</h2>
+
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="card-role">Machine Learning Researcher & Developer</span>
+                        <span class="card-company">Politecnico di Milano / A.A.G. Stucchi (PhD Intern)</span>
+                    </div>
+                    <span class="card-date">05/2024 - Ongoing</span>
+                </div>
+                <div class="card-desc">
+                    At AAG Stucchi, I am carrying out my PhD project, which focuses on designing and implementing time series forecasting models. In addition, I oversaw the company's migration from on-premise infrastructure to Azure, and I designed and implemented a custom ETL system that continuously feeds their data to a trusted external third-party service.
+                </div>
+                <div class="stack-container">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Pytorch</span>
+                    <span class="tech-tag">Qdrant</span>
+                    <span class="tech-tag">Azure</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">Databricks</span>
+                    <span class="tech-tag">Darts</span>
+                    <span class="tech-tag">Neuralforecast</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="card-role">Machine Learning Researcher & Developer</span>
+                        <span class="card-company">Università del Salento</span>
+                    </div>
+                    <span class="card-date">04/2022 - 12/2023</span>
+                </div>
+                <div class="card-desc">
+                    Focused on deep learning and classic methods for computer vision, implementing them in our core project regarding remote sensing (TeBaKA national project). I implemented algorithms for image processing/extraction from Sentinel2. Produced 3 publications during this period, despite having no prior academic experience.
+                </div>
+                <div class="stack-container">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Sentinel2</span>
+                    <span class="tech-tag">UAV imagery</span>
+                    <span class="tech-tag">Pytorch</span>
+                    <span class="tech-tag">Typescript</span>
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">Bash</span>
+                    <span class="tech-tag">Rasterio</span>
+                    <span class="tech-tag">Docker</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="card-role">Machine Learning Researcher & Developer</span>
+                        <span class="card-company">Sorint.tek</span>
+                    </div>
+                    <span class="card-date">06/2021 - 04/2022</span>
+                </div>
+                <div class="card-desc">
+                    Developed a segmentation and anomaly detection system for defective components produced in an industrial plant of a well-known world-leader italian automotive components company. Used both classic and deep learning methods. Hired as a consultant with supervision from the Computer Vision Laboratory of the University of Pavia.
+                </div>
+                <div class="stack-container">
+                    <span class="tech-tag">Pytorch</span>
+                    <span class="tech-tag">Skimage</span>
+                    <span class="tech-tag">Sklearn</span>
+                    <span class="tech-tag">Opencv</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">Bash</span>
+                    <span class="tech-tag">Git</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="card-role">Backend Developer</span>
+                        <span class="card-company">IQUII ex Juniper-zs</span>
+                    </div>
+                    <span class="card-date">06/2020 - 06/2021</span>
+                </div>
+                <div class="card-desc">
+                    Involved in different developing activities: APIs for backends, cloud-middlewares for API adaption from desktop to mobile front end, minor frontend interventions, database design/maintenance. Hands-on experience with managing AWS cloud services.
+                </div>
+                <div class="stack-container">
+                    <span class="tech-tag">MongoDB</span>
+                    <span class="tech-tag">Redis</span>
+                    <span class="tech-tag">Jira</span>
+                    <span class="tech-tag">Javascript</span>
+                    <span class="tech-tag">Typescript</span>
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">Angular</span>
+                    <span class="tech-tag">Flask</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">AWS (Lambda, KMS, API Gateway, S3, EB)</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <span class="card-role">Cloud Developer (Intern)</span>
+                        <span class="card-company">BeSharp</span>
+                    </div>
+                    <span class="card-date">09/2019 - 03/2020</span>
+                </div>
+                <div class="card-desc">
+                    M.Sc intern. This company is a leader in native cloud development and migration. During my thesis activity, I studied and investigated possible enhancements of a BeSharp product operating in several cloud computing environments (AWS, GCP and Azure).
+                </div>
+                <div class="stack-container">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">SAML</span>
+                    <span class="tech-tag">OAuth</span>
+                    <span class="tech-tag">Azure</span>
+                    <span class="tech-tag">GCP</span>
+                    <span class="tech-tag">AWS (Lambda, API Gateway, KMS, SQS, EC2, S3, DynamoDB, Rekognition, CloudFormation)</span>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Skills & Competencies</h2>
+            <div class="skills-grid">
+                <div class="skill-box">
+                    <h3>Languages</h3>
+                    <ul class="skill-list">
+                        <li>Bash, Python</li>
+                        <li>Javascript, Typescript</li>
+                        <li>Latex, HTML, CSS</li>
+                        <li>GDScript</li>
+                        <li>C++, Java (High School/Academic)</li>
+                    </ul>
+                </div>
+
+                <div class="skill-box">
+                    <h3>Frameworks & Libraries</h3>
+                    <ul class="skill-list">
+                        <li>Pytorch, Rasterio, Opencv</li>
+                        <li>Darts, Flask, Sklearn, Skimage</li>
+                        <li>SentinelSat, Pandas, Numpy, Plotly</li>
+                        <li>Beautiful Soup, Node.js, Express.js</li>
+                        <li>Vue.js, Axios</li>
+                    </ul>
+                </div>
+
+                <div class="skill-box">
+                    <h3>Databases & Cloud</h3>
+                    <ul class="skill-list">
+                        <li>MongoDB, PostgreSQL, MySQL</li>
+                        <li>Redis, GraphQL, Qdrant</li>
+                        <li>Docker, Azure, AWS</li>
+                        <li>OAuth, SAML, Jira</li>
+                    </ul>
+                </div>
+
+                <div class="skill-box">
+                    <h3>Soft Skills</h3>
+                    <ul class="skill-list">
+                        <li>Problem solving</li>
+                        <li>Interpersonal skills</li>
+                        <li>Emotional intelligence</li>
+                        <li>Proactivity & Fast learner</li>
+                        <li>Teamwork & Independence</li>
+                    </ul>
+                </div>
+
+                <div class="skill-box">
+                    <h3>Topics of Interest</h3>
+                    <ul class="skill-list">
+                        <li>Time series forecasting</li>
+                        <li>Computer vision & Satellite imagery</li>
+                        <li>Statistics & Language models</li>
+                        <li>Cloud computing</li>
+                        <li>Software engineering</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Publications</h2>
+            
+            <div class="pub-item">
+                <div class="pub-title">[1] TEBAKA: Territorial Basic Knowledge Acquisition. An Agritech Project for Italy: Results on Self-Supervised Semantic Segmentation</div>
+                <div class="pub-authors">Lorenzo Epifani, Vincenzo D'Avino, Antonio Caruso</div>
+                <div class="pub-conf">IEEE ISCC 2023</div>
+            </div>
+
+            <div class="pub-item">
+                <div class="pub-title">[2] Autonomous Intelligent Remote Sensing System for Military Threat Object Detection</div>
+                <div class="pub-authors">Lorenzo Epifani, Antonio Caruso</div>
+                <div class="pub-conf">Workshop: IEEE TechDefence 2023</div>
+            </div>
+
+            <div class="pub-item">
+                <div class="pub-title">[3] Deep learning solutions for agroforestry UAV imagery</div>
+                <div class="pub-authors">Lorenzo Epifani, Antonio Caruso</div>
+                <div class="pub-conf">Journal: Smart Agricultural Technology</div>
+            </div>
+
+            <div class="pub-item">
+                <div class="pub-title">[4] Toward Operational Scenario Awareness: A UAV Swarm-Based Framework</div>
+                <div class="pub-authors">Gianmaria Caprioli, Lorenzo Epifani</div>
+                <div class="pub-conf">Workshop: IEEE TechDefence 2025</div>
+            </div>
+
+            <div class="pub-item">
+                <div class="pub-title">[5] Long-term forecasting: The Good, the Bad, and the Ugly</div>
+                <div class="pub-authors">Lorenzo Epifani, A. Falcetta, M. Roveri</div>
+                <div class="pub-conf">Journal: Computational Intelligence Magazine (Accepted)</div>
+            </div>
+
+            <div class="pub-item">
+                <div class="pub-title">[6] From Zeros to Insight: Univariate Forecasting with Distributional Fidelity in Zero-Inflated Time Series</div>
+                <div class="pub-authors">Lorenzo Epifani, Alessandro Falcetta and Manuel Roveri</div>
+                <div class="pub-conf">Conference: TBD (in progress)</div>
+            </div>
+
+            <div class="pub-item">
+                <div class="pub-title">[7] VETT: VectorDB-Enabled Transfer-Learning for Time-Series Forecasting</div>
+                <div class="pub-authors">A. Falcetta, G. Cristofaro, Lorenzo Epifani, M. Roveri</div>
+                <div class="pub-conf">Conference: AI-MLSystems</div>
+            </div>
+
+            <div class="pub-item">
+                <div class="pub-title">[8] Harnessing Large Language Models for Data Mesh Adoption in Multi-Organizational Data Ecosystems</div>
+                <div class="pub-authors">L. Bove, Lorenzo Epifani, A. Corallo, M. Gervasi</div>
+                <div class="pub-conf">Conference: IFKAD 2025</div>
+            </div>
+
+            <div class="pub-item">
+                <div class="pub-title">[9] Generative AI in Data Management: Enhancing Data Quality Control for Business Data</div>
+                <div class="pub-authors">M. Miglietta, Lorenzo Epifani, M. Di Salvo, A. Corallo, M. Gervasi</div>
+                <div class="pub-conf">Conference: IFKAD 2025</div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Education</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-role">PhD Researcher</span>
+                    <span class="card-date">Ongoing</span>
+                </div>
+                <div class="card-company">Politecnico di Milano</div>
+                <div class="card-desc">
+                    I am exploring the world of foundation models and time series forecasting and how to integrate them.
+                    <br><strong>Stack:</strong> LaTex, Python, AWS, Azure, Darts, Neuralforecast, Ray, Databricks.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-role">II Level Master</span>
+                    <span class="card-date">01/2021 - 01/2022</span>
+                </div>
+                <div class="card-company">Università del Salento</div>
+                <div class="card-desc">
+                    Explored areas of data science, from math and classic/statistical learning theory to modern deep models. The final project was a real case study commissioned during studies.
+                    <br><strong>Thesis Stack:</strong> Pytorch, Opencv, Sklearn, Skimage, Docker.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-role">Master of Science (Computer Engineering)</span>
+                    <span class="card-date">2017 - 2019</span>
+                </div>
+                <div class="card-company">Università di Pavia</div>
+                <div class="card-desc">
+                    Centered on networking, software engineering, operational systems, computer vision, AI principles. Thesis in software engineering with an internship in a cloud expert company.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-role">Bachelor</span>
+                    <span class="card-date">2014 - 2017</span>
+                </div>
+                <div class="card-company">Università del Salento</div>
+                <div class="card-desc">
+                    First approach to data science during thesis in Operative Systems. Diverse course of study including electronics and electromagnetic fields.
+                    <br><strong>Thesis Stack:</strong> Hadoop, Apache Nutch, Apache Solr, Java, LaTex.
+                </div>
+            </div>
+        </section>
+
+        <div class="skills-grid">
+            <div class="skill-box">
+                <h3>Certifications & Licenses</h3>
+                <ul class="skill-list">
+                    <li>Professional engineer license: Score 8/10</li>
+                    <li>IRDTA 2023: 9th International School on Deep Learning</li>
+                    <li>IRDTA 2024: 10th International School on Deep Learning</li>
+                </ul>
+            </div>
+
+            <div class="skill-box">
+                <h3>Spoken Languages</h3>
+                <table class="lang-table">
+                    <thead>
+                        <tr>
+                            <th>Language</th>
+                            <th>Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Italian</td>
+                            <td>Native</td>
+                        </tr>
+                        <tr>
+                            <td>English</td>
+                            <td>C1/C2 (Reading C2, Writing C1)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+        
+    <!--<section>
+            <h2 class="section-title">Other Media & Side Projects</h2>
+            <div class="stack-container">
+                <span class="tech-tag">Isometric RPG</span>
+                <span class="tech-tag">Instagram clone</span>
+                <span class="tech-tag">Machine learning handbook (public draft)</span>
+                <span class="tech-tag">Master Thesis</span>
+                <span class="tech-tag">Master thesis presentation</span>
+                <span class="tech-tag">2° Master final project report</span>
+                <span class="tech-tag">ACA project</span>
+                <span class="tech-tag">My workshop presentation</span>
+                <span class="tech-tag">Computer Vision Blender project</span>
+                <span class="tech-tag">Data mining DCR project</span>
+                <span class="tech-tag">Data mining paper presentation</span>
+            </div>
+        </section>
+    -->
+        <footer>
+            <p>Lorenzo Epifani &copy; 2024. All the attachments and content in this portfolio are shared confidentially.</p>
+        </footer>
+
+    </div>
+
 </body>
 </html>
